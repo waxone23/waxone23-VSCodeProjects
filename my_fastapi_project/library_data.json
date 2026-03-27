@@ -1,0 +1,152 @@
+{
+    "1": {
+        "title": "Clean Code",
+        "author": "Robert Martin",
+        "year": 2008,
+        "available": true
+    },
+    "2": {
+        "title": "The Pragmatic Programmer",
+        "author": "Andrew Hunt, David Thomas",
+        "year": 1999,
+        "available": true
+    },
+    "3": {
+        "title": "Domain-Driven Design",
+        "author": "Eric Evans",
+        "year": 2003,
+        "available": false
+    },
+    "4": {
+        "title": "Refactoring",
+        "author": "Martin Fowler",
+        "year": 1999,
+        "available": true
+    },
+    "5": {
+        "title": "Design Patterns",
+        "author": "Erich Gamma et al.",
+        "year": 1994,
+        "available": false
+    },
+    "6": {
+        "title": "Clean Code",
+        "author": "Robert Martin",
+        "year": 2008,
+        "available": true
+    },
+    "7": {
+        "title": "The Pragmatic Programmer",
+        "author": "Andrew Hunt, David Thomas",
+        "year": 1999,
+        "available": true
+    },
+    "8": {
+        "title": "Domain-Driven Design",
+        "author": "Eric Evans",
+        "year": 2003,
+        "available": false
+    },
+    "9": {
+        "title": "Refactoring",
+        "author": "Martin Fowler",
+        "year": 1999,
+        "available": true
+    },
+    "10": {
+        "title": "Design Patterns",
+        "author": "Erich Gamma et al.",
+        "year": 1994,
+        "available": false
+    },
+    "11": {
+        "title": "Clean Code",
+        "author": "Robert Martin",
+        "year": 2008,
+        "available": true
+    },
+    "12": {
+        "title": "The Pragmatic Programmer",
+        "author": "Andrew Hunt, David Thomas",
+        "year": 1999,
+        "available": true
+    },
+    "13": {
+        "title": "Domain-Driven Design",
+        "author": "Eric Evans",
+        "year": 2003,
+        "available": false
+    },
+    "14": {
+        "title": "Refactoring",
+        "author": "Martin Fowler",
+        "year": 1999,
+        "available": true
+    },
+    "15": {
+        "title": "Design Patterns",
+        "author": "Erich Gamma et al.",
+        "year": 1994,
+        "available": false
+    },
+    "16": {
+        "title": "Clean Code",
+        "author": "Robert Martin",
+        "year": 2008,
+        "available": true
+    },
+    "17": {
+        "title": "The Pragmatic Programmer",
+        "author": "Andrew Hunt, David Thomas",
+        "year": 1999,
+        "available": true
+    },
+    "18": {
+        "title": "Domain-Driven Design",
+        "author": "Eric Evans",
+        "year": 2003,
+        "available": false
+    },
+    "19": {
+        "title": "Refactoring",
+        "author": "Martin Fowler",
+        "year": 1999,
+        "available": true
+    },
+    "20": {
+        "title": "Design Patterns",
+        "author": "Erich Gamma et al.",
+        "year": 1994,
+        "available": false
+    },
+    "21": {
+        "title": "Clean Code",
+        "author": "Robert Martin",
+        "year": 2008,
+        "available": true
+    },
+    "22": {
+        "title": "The Pragmatic Programmer",
+        "author": "Andrew Hunt, David Thomas",
+        "year": 1999,
+        "available": true
+    },
+    "23": {
+        "title": "Domain-Driven Design",
+        "author": "Eric Evans",
+        "year": 2003,
+        "available": false
+    },
+    "24": {
+        "title": "Refactoring",
+        "author": "Martin Fowler",
+        "year": 1999,
+        "available": true
+    },
+    "25": {
+        "title": "Design Patterns",
+        "author": "Erich Gamma et al.",
+        "year": 1994,
+        "available": false
+    }
+}

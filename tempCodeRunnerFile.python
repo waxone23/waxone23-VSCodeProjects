@@ -1,0 +1,52 @@
+import pytest
+from exceptions import PatientError, TemperatureError
+from patient import Patient
+
+def test_create_valid_patient():
+    # Tester at en gyldig pasient blir opprettet uten feil
+    p = Patient("P001", "Ola Nordmann")
+    assert p.patient_id == "P001"
+    assert p.name == "Ola Nordmann"
+    assert p.temperatures == []
+
+def test_invalid_patient_id_too_short():
+    # Bruker pytest.raises for å sjekke at feilen kastes når ID er for kort
+    with pytest.raises(PatientError, match="Id is too short!"):
+        Patient("12", "Ola Nordmann")
+
+def test_add_valid_temperatures():
+    # Tester at vi kan legge til gyldige temperaturer
+    p = Patient("P001", "Ola Nordmann")
+    p.add_temperature(37.5)
+    p.add_temperature(38.2)
+    assert len(p.temperatures) == 2
+    assert 37.5 in p.temperatures
+
+def test_temperature_too_high():
+    p = Patient("P001", "Ola Nordmann")
+    # Sjekker at verdi over 43.0 kaster TemperatureError
+    with pytest.raises(TemperatureError, match="Temperature out of range"):
+        p.add_temperature(44.0)
+
+def test_temperature_too_low():
+    p = Patient("P001", "Ola Nordmann")
+    # Sjekker at verdi under 34.0 kaster TemperatureError
+    with pytest.raises(TemperatureError, match="Temperature out of range"):
+        p.add_temperature(33.0)
+
+def test_average_calculation():
+    p = Patient("P001", "Ola Nordmann")
+    p.add_temperature(37.0)
+    p.add_temperature(38.0)
+    # Snittet av 37 og 38 er 37.5
+    assert p.get_average_temperatures() == 37.5
+
+def test_has_fever():
+    p = Patient("P001", "Ola Nordmann")
+    p.add_temperature(39.0) # Snitt blir 39.0 (> 38.0)
+    assert p.has_fever() is True
+
+def test_no_fever():
+    p = Patient("P001", "Ola Nordmann")
+    p.add_temperature(36.5) # Snitt blir 36.5 (< 38.0)
+    assert p.has_fever() is False

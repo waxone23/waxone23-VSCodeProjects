@@ -1,0 +1,9 @@
+name,course,grade
+Alice,Python,85
+Bob,Python,92
+Charlie,Data1300,78
+Brede,Data1300,100
+brede,Data1300,100
+Charlie ,Data1300,78
+Alice,Python,85
+BrokenRobot,Data1300,ERROR_GRADE

@@ -1,0 +1,4 @@
+Data Analysis Report
+--------------------
+Total Students: 3
+Average Grade: 85.00

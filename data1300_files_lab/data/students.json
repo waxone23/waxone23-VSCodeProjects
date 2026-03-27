@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Alice",
+        "course": "Python",
+        "grade": "85"
+    },
+    {
+        "name": "Bob",
+        "course": "Python",
+        "grade": "92"
+    },
+    {
+        "name": "Charlie",
+        "course": "Data1300",
+        "grade": "78"
+    }
+]

@@ -1,0 +1,52 @@
+==========================================================
+🎹 MPC SAMPLE HUB PRO - SYSTEM REQUIREMENTS & MANIFEST
+==========================================================
+Developer: waxone23-VSCodeProjects
+Version: 1.0.0
+Date: March 2026
+----------------------------------------------------------
+
+[ SOFTWARE REQUIREMENTS ]
+To run this digital product, the following must be installed:
+
+1. macOS (Intel or Apple Silicon / M1/M2/M3)
+2. Docker Desktop (Free) 
+3. A Modern Web Browser (Safari, Chrome, or Firefox)
+
+----------------------------------------------------------
+
+[ HARDWARE COMPATIBILITY ]
+This hub is optimized for the following standalone gear:
+
+- Akai MPC Live (I & II) / MPC One (+) / MPC X / MPC Key
+- Akai Force
+- Any hardware sampler supporting .WAV or .MP3 via SD Card
+
+----------------------------------------------------------
+
+[ PRODUCT MANIFEST (What's Included) ]
+
+- mpc_sample_manager.py     : The core FastAPI engine (Python 3.11 logic).
+- Dockerfile                : The automated environment container.
+- Launch_MPC_Hub.command    : The "One-Click" launcher for macOS.
+- README.md                 : Your setup guide and support FAQ.
+- requirements.txt          : This system manifest.
+
+----------------------------------------------------------
+
+[ PYTHON DEPENDENCIES (Internal) ]
+The following libraries are automatically handled by Docker:
+
+- fastapi==0.100.0+
+- uvicorn==0.22.0
+- python-multipart==0.0.6
+
+----------------------------------------------------------
+
+[ NETWORK REQUIREMENTS ]
+- For wireless mobile uploading, your Mac and Phone must be 
+  connected to the same local Wi-Fi network.
+
+==========================================================
+© 2026 waxone23-VSCodeProjects | Oslo, Norway
+==========================================================

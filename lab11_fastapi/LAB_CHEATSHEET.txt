@@ -1,0 +1,263 @@
+LAB 11 CHEAT SHEET (Python + Exit Codes + HTTP/REST + FastAPI + Requests)
+
+======================================================================
+1) PYTHON SCRIPT PATTERN (MAIN + EXIT CODES)
+======================================================================
+
+Goal:
+- Put logic in main()
+- Return integer exit code
+- Call sys.exit(main()) once at bottom
+
+Template:
+import sys
+
+def main():
+    # do work
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+Common exit codes used in this lab:
+- 0 = success
+- 1 = runtime/validation failure
+- 2 = usage error (wrong/missing arguments)
+
+Example logic for check_number.py:
+- No argument -> print usage to stderr, return 2
+- Non-integer argument -> print error to stderr, return 1
+- Negative integer -> print error to stderr, return 1
+- Valid positive/zero integer -> print success, return 0
+
+Useful stderr syntax:
+print("Error message", file=sys.stderr)
+
+How to check exit code in bash:
+python3 -u check_number.py 42
+echo $?
+
+
+======================================================================
+2) HTTP + REST BASICS (CONCEPTS YOU MUST KNOW)
+======================================================================
+
+Request = client asks server
+Response = server returns status + body
+
+Method meanings:
+- GET = read
+- POST = create
+- PUT = replace whole resource
+- DELETE = remove
+
+Status codes you used:
+- 200 OK -> successful read/update with content
+- 201 Created -> successful create
+- 204 No Content -> successful delete, no body
+- 404 Not Found -> resource missing
+- 422 Unprocessable Content -> validation failed (wrong type/shape)
+
+REST correctness rules:
+- Never use GET to delete or modify data
+- POST create should normally return 201
+- Not found should return 404, not 200
+- DELETE often returns 204 with empty body
+
+
+======================================================================
+3) FASTAPI QUICK START
+======================================================================
+
+Folder used for API lab:
+- lab_api/main.py
+- lab_api/models.py
+
+Install deps:
+pip install fastapi uvicorn
+
+Run server from lab_api folder:
+uvicorn main:app --reload
+
+Open in browser:
+- http://127.0.0.1:8000/
+- http://127.0.0.1:8000/docs
+
+What /docs is:
+- Auto-generated Swagger UI
+- Lets you test endpoints interactively
+- Shows request/response schemas
+
+
+======================================================================
+4) MINIMUM FASTAPI APP STRUCTURE
+======================================================================
+
+Core imports:
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import Response
+
+Create app:
+app = FastAPI()
+
+Simple routes:
+@app.get("/")
+def root():
+    return {"message": "API is running"}
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+Path parameter route:
+@app.get("/books/{book_id}")
+def get_book(book_id: int):
+    return {"id": book_id, "title": "Example Book"}
+
+Important behavior:
+- Visiting /books/42 -> book_id is integer 42
+- Visiting /books/hello -> FastAPI returns 422 automatically
+
+
+======================================================================
+5) PYDANTIC MODELS (API CONTRACT)
+======================================================================
+
+models.py idea:
+from pydantic import BaseModel
+
+class BookCreate(BaseModel):
+    title: str
+    author: str
+    year: int
+    available: bool = True
+
+class BookResponse(BaseModel):
+    id: int
+    title: str
+    author: str
+    year: int
+    available: bool = True
+
+Why two models:
+- BookCreate = what client sends (no id)
+- BookResponse = what server returns (includes id)
+- Prevents client from controlling server-generated id
+
+
+======================================================================
+6) COMPLETE BOOK API LOGIC (IN-MEMORY)
+======================================================================
+
+In-memory "DB":
+books_db = {}
+id_counter = 1
+
+POST /books:
+- Accept BookCreate body
+- Create BookResponse with new id
+- Store in dict
+- Return 201
+
+GET /books:
+- Return list of all stored books
+
+GET /books/{book_id}:
+- If id missing -> raise HTTPException(404, "Book not found")
+- Else return stored book
+
+DELETE /books/{book_id}:
+- If id missing -> 404
+- Else delete and return Response(status_code=204)
+
+
+======================================================================
+7) REQUESTS PIPELINE SCRIPT (seed_books.py)
+======================================================================
+
+Goal:
+- Call running API via HTTP
+- Add 3 books with requests.post
+- Exit 0 only if all return 201
+- Exit 1 on any failure
+- Exit 1 on connection refused
+
+Install requests:
+pip install requests
+
+Pattern used:
+- main() returns code
+- try/except around HTTP calls
+- requests.exceptions.ConnectionError handled
+
+Typical URL:
+http://localhost:8000/books
+
+
+======================================================================
+8) CRUCIAL BASH COMMANDS FOR THIS LAB
+======================================================================
+
+Run script + show exit code:
+python3 -u check_number.py -5
+echo $?
+
+Run FastAPI app:
+cd lab_api
+uvicorn main:app --reload
+
+Test endpoints with curl:
+curl -i http://127.0.0.1:8000/
+curl -i http://127.0.0.1:8000/health
+curl -i http://127.0.0.1:8000/books/42
+curl -i http://127.0.0.1:8000/books/hello
+
+Create book:
+curl -i -X POST http://127.0.0.1:8000/books -H "Content-Type: application/json" -d '{"title":"Dune","author":"Frank Herbert","year":1965}'
+
+List books:
+curl -i http://127.0.0.1:8000/books
+
+Delete book:
+curl -i -X DELETE http://127.0.0.1:8000/books/1
+
+Seed books script:
+python3 -u seed_books.py
+echo $?
+
+
+======================================================================
+9) DEBUG CHECKLIST (WHEN SOMETHING FAILS)
+======================================================================
+
+If import fastapi cannot be resolved:
+- Select correct Python interpreter in VS Code
+- Install deps in that same interpreter
+- Re-run: pip install fastapi uvicorn requests
+
+If seed script says cannot connect:
+- Confirm server is running on port 8000
+- Check URL in script matches server URL
+
+If endpoint returns 422:
+- Check data types and required fields
+- For path params, verify type (int vs string)
+
+If delete seems not working:
+- Ensure id exists before delete
+- 204 means success with empty body
+
+
+======================================================================
+10) WHAT TO REMEMBER FOR SUBMISSION/ORAL QUESTIONS
+======================================================================
+
+- Use main() + sys.exit(main()) in scripts
+- Distinguish usage errors (2) vs normal failures (1)
+- Explain why GET must be safe/read-only
+- Explain 200 vs 201 vs 204 vs 404 vs 422
+- Explain API contract and request vs response models
+- Explain why /docs is useful (testing + schema)
+- Explain how in-memory dict is temporary (resets on restart)
+
+End of cheat sheet.

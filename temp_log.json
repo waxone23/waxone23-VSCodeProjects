@@ -1,0 +1,22 @@
+[
+    {
+        "temperature": 37.0,
+        "unit": "Celsius"
+    },
+    {
+        "temperature": 37.0,
+        "unit": "Celsius"
+    },
+    {
+        "temperature": 38.0,
+        "unit": "Celsius"
+    },
+    {
+        "temperature": 41.0,
+        "unit": "Celsius"
+    },
+    {
+        "temperature": 55.0,
+        "unit": "Celsius"
+    }
+]

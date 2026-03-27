@@ -1,0 +1,107 @@
+LAB 11 ONE-PAGE CHEAT SHEET (EXAM MODE)
+
+1) SCRIPT PATTERN + EXIT CODES
+- Always use:
+  import sys
+  def main():
+      return 0
+  if __name__ == "__main__":
+      sys.exit(main())
+- Exit codes:
+  0 = success
+  1 = normal failure (validation/runtime/request)
+  2 = usage error (missing args)
+- Print errors to stderr:
+  print("Error text", file=sys.stderr)
+
+2) check_number.py LOGIC
+- No arg: usage to stderr, return 2
+- Non-int: error to stderr, return 1
+- Negative: error to stderr, return 1
+- Valid >= 0: print "Valid number: X", return 0
+
+3) HTTP + REST CORE RULES
+- GET = read only (must not change data)
+- POST = create
+- PUT = replace full resource
+- DELETE = remove
+- Status codes:
+  200 OK = success with body
+  201 Created = new resource created
+  204 No Content = success, empty body
+  404 Not Found = resource missing
+  422 Unprocessable Content = validation/type error
+
+4) FASTAPI BASICS
+- Setup:
+  from fastapi import FastAPI, HTTPException
+  from fastapi.responses import Response
+  app = FastAPI()
+- Routes:
+  GET / -> {"message":"API is running"}
+  GET /health -> {"status":"ok"}
+- Docs page:
+  /docs = Swagger UI (interactive endpoint testing)
+
+5) PATH PARAMS
+- Route: GET /books/{book_id}
+- book_id typed as int in function signature
+- /books/42 -> works, book_id = 42
+- /books/hello -> FastAPI returns 422 automatically
+
+6) PYDANTIC API CONTRACT
+- BookCreate: title, author, year, available=True
+- BookResponse: id + same fields
+- Why 2 models:
+  client should send create fields only
+  server returns id and filtered response shape
+
+7) COMPLETE BOOK API BEHAVIOR
+- In-memory storage:
+  books_db = {}
+  id_counter = 1
+- POST /books:
+  accepts BookCreate, assigns id, stores, returns BookResponse + 201
+- GET /books:
+  returns list of books
+- GET /books/{book_id}:
+  return book or raise HTTPException(404, "Book not found")
+- DELETE /books/{book_id}:
+  delete if exists -> 204 no body
+  if missing -> 404
+
+8) seed_books.py (PIPELINE SCRIPT)
+- Uses requests to POST 3 books to /books
+- If all status 201 -> print success, exit 0
+- If any non-201 -> print stderr, exit 1
+- If connection refused/server down -> catch ConnectionError, print stderr, exit 1
+
+9) MUST-KNOW BASH COMMANDS
+- Check script exit code:
+  python3 -u check_number.py 42
+  echo $?
+- Run API:
+  cd lab_api
+  uvicorn main:app --reload
+- Open:
+  http://127.0.0.1:8000/
+  http://127.0.0.1:8000/docs
+- Quick endpoint tests:
+  curl -i http://127.0.0.1:8000/
+  curl -i http://127.0.0.1:8000/health
+  curl -i http://127.0.0.1:8000/books/hello
+- Create:
+  curl -i -X POST http://127.0.0.1:8000/books -H "Content-Type: application/json" -d '{"title":"Dune","author":"Frank Herbert","year":1965}'
+- List:
+  curl -i http://127.0.0.1:8000/books
+- Delete:
+  curl -i -X DELETE http://127.0.0.1:8000/books/1
+- Seed pipeline:
+  python3 -u seed_books.py
+  echo $?
+
+10) QUICK TROUBLESHOOT
+- "Import fastapi could not be resolved": choose correct interpreter + reinstall deps there.
+- Seed script cannot connect: start uvicorn first and verify port 8000.
+- 422 errors: wrong field type or missing required field.
+- 404 after delete: expected if resource was removed.

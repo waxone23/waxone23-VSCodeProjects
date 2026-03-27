@@ -1,0 +1,30 @@
+temperatures = []
+
+while True:
+    temp_input = input("Enter a temperature in Celsius: ")
+    if temp_input == "0" or temp_input == "abc":
+        break
+    
+    try:
+        val = float(temp_input)
+        temperatures.append(val)
+        print ("Current list: ", temperatures)
+    except ValueError:
+        print("Invalid input. Please enter a numeric value.")
+
+# ... (while-løkken din over her)
+
+for t in temperatures:
+    if t < 36.5:
+        print(f"{t}°C: Hypothermia risk.")
+    elif t <= 38:
+        print(f"{t}°C: Normal temperature.")
+    else:
+        print(f"{t}°C: Fever detected.")
+
+# FLYTT DISSE HELT TIL VENSTRE (UTEN INNRYKK)
+if len(temperatures) > 0:
+    average = sum(temperatures) / len(temperatures)
+    print(f"Average temperature: {average:.1f}°C")
+else:
+    print("No temperatures were entered.")
