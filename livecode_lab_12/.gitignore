@@ -1,0 +1,17 @@
+# Python cache-filer
+__pycache__/
+*.py[cod]
+*.class
+
+# Miljøer
+.venv/
+venv/
+env/
+
+# IDE-innstillinger
+.vscode/
+.idea/
+
+# Test-rapporter
+.pytest_cache/
+.mypy_cache/
